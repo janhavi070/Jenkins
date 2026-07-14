@@ -3,24 +3,16 @@ pipeline {
 
     stages {
 
-        stage('Show Workspace') {
-            steps {
-                echo 'Current Workspace'
-                sh 'pwd'
-            }
-        }
-
-        stage('List Files') {
-            steps {
-                sh 'ls -la'
-            }
-        }
-
-        stage('Run Python App') {
+        stage('Run Application') {
             steps {
                 sh 'python3 app.py'
             }
         }
 
+        stage('Run Tests') {
+            steps {
+                sh 'python3 test_app.py'
+            }
+        }
     }
 }
