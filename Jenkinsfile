@@ -1,26 +1,24 @@
 pipeline {
     agent any
 
-    environment {
-        APP_NAME = "jenkins-learning"
-    }
-
     stages {
 
-        stage('Jenkins Variables') {
+        stage('Run Application') {
             steps {
-                echo "Application: ${env.APP_NAME}"
-                echo "Build Number: ${env.BUILD_NUMBER}"
-                echo "Job Name: ${env.JOB_NAME}"
+                sh 'python3 app.py'
             }
         }
 
-        stage('Shell Variables') {
+        stage('Run Tests') {
             steps {
-                sh 'echo "App: $APP_NAME"'
-                sh 'echo "Workspace: $WORKSPACE"'
-                sh 'echo "Build: $BUILD_NUMBER"'
+                sh 'python3 test_app.py'
             }
         }
+	
+	stage('Archive Artifact') {
+ 	     steps {
+        	archiveArtifacts artifacts: 'artifacts/build-info.txt'
+   	     }
+	}
     }
 }
