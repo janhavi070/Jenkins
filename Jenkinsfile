@@ -1,17 +1,25 @@
 pipeline {
     agent any
 
+    environment {
+        APP_NAME = "jenkins-learning"
+    }
+
     stages {
 
-        stage('Run Application') {
+        stage('Jenkins Variables') {
             steps {
-                sh 'python3 app.py'
+                echo "Application: ${env.APP_NAME}"
+                echo "Build Number: ${env.BUILD_NUMBER}"
+                echo "Job Name: ${env.JOB_NAME}"
             }
         }
 
-        stage('Run Tests') {
+        stage('Shell Variables') {
             steps {
-                sh 'python3 test_app.py'
+                sh 'echo "App: $APP_NAME"'
+                sh 'echo "Workspace: $WORKSPACE"'
+                sh 'echo "Build: $BUILD_NUMBER"'
             }
         }
     }
